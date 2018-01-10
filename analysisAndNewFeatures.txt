@@ -1,0 +1,31 @@
+Analysis
+
+- Compare fares from same location
+    - time of day / day of week
+- Est. fare given pickup/dropoff
+- Payment types vs anything: corr.
+- When Aggregation
+    time
+        - day of week
+        - hourly
+        - holidays
+    what
+        - Volume
+        - Burrough volume / $
+        - Fare Avg. vs dist.
+- Congestion: trip time vs distance
+- How many cabs are there?
+    - hourly
+    - Day of week
+
+
+
+
+New Features
+
+- Day of week
+- Holiday Flag
+- Burroughs
+- 15 min window id...pickup/dropoff
+- Hour...pickup/dropoff
+- Trip duration
