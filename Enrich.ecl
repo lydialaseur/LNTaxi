@@ -1,4 +1,3 @@
-/* 4th step */
 IMPORT LNTaxi;
 IMPORT Std;
 
@@ -37,6 +36,7 @@ withTimeEnrichment := PROJECT
             )
     );
 
-OUTPUT(withTimeEnrichment, NAMED('enrichedData'));
+//OUTPUT(withTimeEnrichment, NAMED('enrichedData'));
+OUTPUT(withTimeEnrichment,, LNTaxi.Files.GROUP_PREFIX + '::enriched_validated_data', OVERWRITE)
 // OUTPUT(validatedData(NOT is_valid_record), NAMED('validatedData'));
 // OUTPUT(enrichedData,, LNTaxi.Files.GROUP_PREFIX + '::enriched_validated_data', OVERWRITE);

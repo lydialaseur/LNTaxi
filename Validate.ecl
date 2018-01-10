@@ -1,4 +1,3 @@
-/* third step */
 IMPORT LNTaxi;
 
 #WORKUNIT('name','Taxi Data: Validation');
