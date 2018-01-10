@@ -148,7 +148,20 @@ EXPORT Files := MODULE
             Validation.YellowLayout;
             Std.Date.Date_t     pickup_date;
             Std.Date.Time_t     pickup_time;
-        END;
+            Std.Date.Time_t     pickup_minutes_after_midnight;
+            Std.Date.Time_t     pickup_time_window;
+            Std.Date.Time_t     pickup_time_hour;
+            Std.Date.Date_t     pickup_day_of_week;
+            Std.Date.Time_t     dropoff_minutes_after_midnight;
+            Std.Date.Time_t     dropoff_time_window;
+            Std.Date.Time_t     dropoff_time_hour;
+            Std.Date.Date_t     dropoff_day_of_week;
+            Std.Date.Date_t     dropoff_date;
+            Std.Date.Time_t     trip_duration_minutes;
+            Std.Date.Time_t     dropoff_time;
+            DECIMAL10_2         trip_distance_bucket;
+
+            END;
 
         EXPORT PATH := GROUP_PREFIX + '::validated_enriched_data';
 

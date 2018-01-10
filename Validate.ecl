@@ -1,10 +1,10 @@
-IMPORT Taxi;
+IMPORT LNTaxi;
 
 #WORKUNIT('name','Taxi Data: Validation');
 
-taxiData := Taxi.Files.ETL.inFile;
+taxiData := LNTaxi.Files.ETL.inFile;
 
-Taxi.Files.Validation.YellowLayout MakeValidationRec(Taxi.Files.ETL.YellowLayout inRec) := TRANSFORM
+LNTaxi.Files.Validation.YellowLayout MakeValidationRec(LNTaxi.Files.ETL.YellowLayout inRec) := TRANSFORM
     SELF.is_good_passenger_count := inRec.passenger_count > 0;
 
     SELF.is_valid_vendor_id := inRec.VendorID IN [1,2];
@@ -49,4 +49,4 @@ validatedData := PROJECT
 
 // OUTPUT(validatedData, NAMED('validatedData'));
 // OUTPUT(validatedData(NOT is_valid_record), NAMED('validatedData'));
-OUTPUT(validatedData,, Taxi.Files.GROUP_PREFIX + '::validated_data', OVERWRITE);
+OUTPUT(validatedData,, LNTaxi.Files.GROUP_PREFIX + '::validated_data', OVERWRITE);
