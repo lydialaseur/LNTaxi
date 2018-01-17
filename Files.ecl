@@ -30,6 +30,21 @@ EXPORT Files := MODULE
 
     END;
 
+//--------------------------------------------------------------------------
+
+    EXPORT Weather2 := MODULE
+
+        EXPORT FlatWeatherRec := RECORD
+            Weather.FlatWeatherRec;
+            UNSIGNED1 precipTypeID;
+        END;
+
+        EXPORT PATH := GROUP_PREFIX + '::weather_new_york_city_2';
+
+        EXPORT inFile := DATASET(PATH, FlatWeatherRec, FLAT);
+
+    END;
+
     //--------------------------------------------------------------------------
 
     EXPORT Raw := MODULE
@@ -162,12 +177,31 @@ EXPORT Files := MODULE
             Std.Date.Time_t     dropoff_time;
             DECIMAL10_2         trip_distance_bucket;
 
-            END;
+        END;
 
-        EXPORT PATH := GROUP_PREFIX + '::validated_enriched_data';
+        EXPORT PATH := GROUP_PREFIX + '::enriched_validated_data';
 
         EXPORT inFile := DATASET(PATH, YellowLayout, FLAT);
 
+        EXPORT WeatherAddedLayout := RECORD
+           YellowLayout;
+           Weather2.FlatWeatherRec  weather;
+        END;
+
+        EXPORT JOINED_PATH := GROUP_PREFIX + '::enriched_validated_data_plus_weather';
+
     END;
+
+    //--------------------------------------------------------------------------
+
+    EXPORT PrecipTypes := DATASET
+       (
+           [
+               {0, ''},
+               {1, 'rain'},
+               {2, 'snow'}
+           ],
+           {UNSIGNED1 id, STRING precipType}
+       );
 
 END;

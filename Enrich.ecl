@@ -6,6 +6,7 @@ IMPORT Std;
 #WORKUNIT('name','Taxi Data: Enrich');
 
 validatedData := LNTaxi.Files.Validation.inFile;
+weatherData := LNTaxi.Files.Weather.inFile;
 
 withTimeEnrichment := PROJECT
     (
@@ -37,6 +38,24 @@ withTimeEnrichment := PROJECT
             )
     );
 
-OUTPUT(withTimeEnrichment, NAMED('enrichedData'));
+// OUTPUT(withTimeEnrichment, NAMED('enrichedData'));
 // OUTPUT(validatedData(NOT is_valid_record), NAMED('validatedData'));
 // OUTPUT(enrichedData,, LNTaxi.Files.GROUP_PREFIX + '::enriched_validated_data', OVERWRITE);
+
+withWeatherEnrichment := JOIN
+    (
+        withTimeEnrichment,
+        weatherData,
+        LEFT.pickup_date = RIGHT.Date
+            AND RIGHT.minutes_after_midnight BETWEEN LEFT.pickup_minutes_after_midnight - 30 AND LEFT.pickup_minutes_after_midnight + 30,
+        TRANSFORM
+            (
+                LNTaxi.Files.Enriched.WeatherAddedLayout,
+                SELF.weather := RIGHT,
+                SELF := LEFT,
+                SELF := []
+            ),
+        LOOKUP, LEFT OUTER
+    );
+
+OUTPUT(withWeatherEnrichment,,LNTaxi.Files.Enriched.PATH,COMPRESSED,OVERWRITE);
